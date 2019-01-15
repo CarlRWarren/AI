@@ -12,13 +12,15 @@ GameObject:
   - component: {fileID: 5732020635116760988}
   - component: {fileID: 5732020635116760991}
   - component: {fileID: 5732020635116760990}
+  - component: {fileID: 5534397475043388176}
+  - component: {fileID: 8919474376327841938}
   - component: {fileID: 5732020635116760985}
   - component: {fileID: 5732020635116760989}
   - component: {fileID: 5732020635116760978}
   - component: {fileID: 5732020635116760979}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Agent01
-  m_TagString: Agent01
+  m_TagString: AGENT01
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d0744d2d0c8c242aa53ade6eb5c7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_targetTag: Agent02
-  m_behaviour: {fileID: 5732020635116760991}
-  m_maxSpeed: 8
-  m_maxForce: 0.5
+  m_behaviours:
+  - {fileID: 5534397475043388176}
+  - {fileID: 8919474376327841938}
+  m_maxSpeed: 10
+  m_maxForce: 0.8
 --- !u!114 &5732020635116760991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,6 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8db52d40f379004f91443361a021aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 6
+  m_targetTag: 2
 --- !u!114 &5732020635116760990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,6 +83,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc7517766c1fca429f0fc2c2d1efa53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 20
+  m_targetTag: 0
+--- !u!114 &5534397475043388176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732020635116760977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2481eb35768c2e24188d4f665a45fa5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 5
+  m_targetTag: 1
+--- !u!114 &8919474376327841938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5732020635116760977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1b01d63f549cd47bce80e4b072bee7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 5
+  m_targetTag: 0
+  m_radius: 2
+  m_forwardDistance: 2
+  m_displacement: 20
 --- !u!114 &5732020635116760985
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9555d9cb66158e24289b771aa1663117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 5
+  m_targetTag: 0
   m_radius: 5
 --- !u!23 &5732020635116760989
 MeshRenderer:

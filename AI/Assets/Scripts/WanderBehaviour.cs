@@ -15,15 +15,17 @@ public class WanderBehaviour : AutonomousBehaviour
         m_theta = Random.Range(0.0f, 360.0f);
     }
 
-    public override Vector3 Execute(AutonomousAgent agent, AutonomousAgent target)
+    public override Vector3 Execute(AutonomousAgent agent, AutonomousAgent target, string targetTag)
     {
         m_theta += Random.Range(-m_displacement, m_displacement);
         Vector3 randomPoint = Quaternion.AngleAxis(m_theta, Vector3.up) * new Vector3(0.0f, 0.0f, m_radius);
 
         Vector3 forward = agent.forward * m_forwardDistance;
         Vector3 direction = forward + randomPoint;
+        Vector3 desired = direction.normalized * agent.maxSpeed;
 
-        Vector3 steering = direction.normalized * agent.maxSpeed;
+        Vector3 steering = desired - agent.velocity;
+
         return steering;
     }
 

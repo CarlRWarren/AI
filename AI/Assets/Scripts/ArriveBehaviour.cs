@@ -6,8 +6,9 @@ public class ArriveBehaviour : AutonomousBehaviour
 {
     [SerializeField] [Range(0.0f, 50.0f)] float m_radius = 5.0f;
 
-    public override Vector3 Execute(AutonomousAgent agent, AutonomousAgent target)
+    public override Vector3 Execute(AutonomousAgent agent, AutonomousAgent target, string targetTag)
     {
+        if (target == null) return Vector3.zero;
         Vector3 desired = (target.position - agent.position);
         float distance = desired.magnitude;
 

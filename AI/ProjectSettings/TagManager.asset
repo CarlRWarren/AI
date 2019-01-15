@@ -4,7 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Agent01
+  - AGENT01
+  - AGENT02
   - Agent02
   layers:
   - Default

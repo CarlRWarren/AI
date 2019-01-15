@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class AutonomousAgent : MonoBehaviour
 {
-    [SerializeField] string m_targetTag = "";
-    [SerializeField] AutonomousBehaviour/*[]*/ m_behaviour = null;
+    public enum eAgentTag
+    {
+        NONE,
+        AGENT01,
+        AGENT02,
+        AGENT03
+    }
+
+    [SerializeField] AutonomousBehaviour[] m_behaviours = null;
     [SerializeField] [Range(0.0f, 20.0f)] float m_maxSpeed = 0.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_maxForce = 0.0f;
 
@@ -19,12 +26,22 @@ public class AutonomousAgent : MonoBehaviour
     void Update()
     {
         acceleration = Vector3.zero;
-        GameObject target = (m_targetTag != "") ? GetNearestGameObject(gameObject, m_targetTag) : null;
-        AutonomousAgent targetAgent = (target) ? target.GetComponent<AutonomousAgent>() : null;
 
-        Vector3 force = m_behaviour.Execute(this, targetAgent);
-        force.y = 0.0f;
-        ApplyForce(force);
+        //apply force to acceleration for all behaviours
+        foreach(AutonomousBehaviour behaviour in m_behaviours)
+        {
+            float scale = 1.0f - Mathf.Clamp01(acceleration.magnitude / maxForce);
+            if (scale > 0.0f)
+            {
+                GameObject target = (behaviour.targetTagName != "NONE") ? GetNearestGameObject(gameObject, behaviour.targetTagName, behaviour.perception) : null;
+                AutonomousAgent targetAgent = (target) ? target.GetComponent<AutonomousAgent>() : null;
+
+                Vector3 force = behaviour.Execute(this, targetAgent, behaviour.targetTagName);
+                force = force * scale * behaviour.strength;
+                force.y = 0.0f;
+                ApplyForce(force);
+            }
+        }       
 
         velocity += acceleration; //* Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
@@ -53,7 +70,7 @@ public class AutonomousAgent : MonoBehaviour
         return newPosition;
     }
 
-    public GameObject GetNearestGameObject(GameObject sourceGameObject, string tag, float maxDistance = float.MaxValue)
+    public static GameObject GetNearestGameObject(GameObject sourceGameObject, string tag, float maxDistance = float.MaxValue)
     {
         GameObject nearest = null;
         GameObject[] gameObjects;
@@ -76,5 +93,24 @@ public class AutonomousAgent : MonoBehaviour
             if (nearestDistance > maxDistance) nearest = null;
         }
         return nearest;
+    }
+
+    public static GameObject[] GetGameObjects(GameObject sourceGameObject, string tag, float maxDistance = float.MaxValue)
+    {
+        List<GameObject> returnGameObjects = new List<GameObject>();
+        GameObject[] gameObjects;
+        gameObjects = GameObject.FindGameObjectsWithTag(tag);
+        for (int i = 0; i < gameObjects.Length; i++)
+        {
+            if (gameObjects[i] != sourceGameObject)
+            {
+                float distance = (sourceGameObject.transform.position - gameObjects[i].transform.position).magnitude;
+                if (distance <= maxDistance)
+                {
+                    returnGameObjects.Add(gameObjects[i]);
+                }
+            }
+        }
+        return returnGameObjects.ToArray();
     }
 }

@@ -10,14 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8158255161380829657}
   - component: {fileID: 8158255161380829221}
-  - component: {fileID: 8158255161380829220}
   - component: {fileID: 8158255161380829223}
   - component: {fileID: 8158255161380829658}
   - component: {fileID: 8158255161380829659}
   - component: {fileID: 8158255161380829656}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Agent02
-  m_TagString: Agent02
+  m_TagString: AGENT02
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,22 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d0744d2d0c8c242aa53ade6eb5c7e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_target: {fileID: 0}
-  m_behaviour: {fileID: 8158255161380829223}
+  m_behaviours:
+  - {fileID: 8158255161380829223}
   m_maxSpeed: 10
   m_maxForce: 1
---- !u!114 &8158255161380829220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8158255161380829662}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff5d30db70b38743b2fb77e852285eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8158255161380829223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1b01d63f549cd47bce80e4b072bee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_strength: 1
+  m_perception: 5
+  m_targetTag: 0
   m_radius: 2.17
   m_forwardDistance: 3.05
   m_displacement: 22.9
