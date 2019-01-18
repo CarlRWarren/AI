@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CohesionBehaviour : AutonomousBehaviour
+public class AlignmentBehaviour : AutonomousBehaviour
 {
     public override Vector3 Execute(AutonomousAgent agent, AutonomousAgent target, string targetTag)
     {
@@ -16,11 +16,11 @@ public class CohesionBehaviour : AutonomousBehaviour
             foreach(GameObject obj in gameObjects)
             {
                 AutonomousAgent targetAgent = (obj) ? obj.GetComponent<AutonomousAgent>() : null;
-                sum += targetAgent.position;
+                sum += targetAgent.velocity;
             }
-            sum /= gameObjects.Length;
-            //seek to sum position
-            Vector3 desired = (sum - agent.position).normalized * agent.maxSpeed;
+            Vector3 averageVelocity = sum/ gameObjects.Length;
+            //align to average velocity
+            Vector3 desired = averageVelocity.normalized * agent.maxSpeed;
             steering = desired - agent.velocity;
         }
         return steering;

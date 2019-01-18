@@ -15,6 +15,7 @@ public class AutonomousAgent : MonoBehaviour
     [SerializeField] AutonomousBehaviour[] m_behaviours = null;
     [SerializeField] [Range(0.0f, 20.0f)] float m_maxSpeed = 0.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_maxForce = 0.0f;
+    [SerializeField] [Range(0.0f, 20.0f)] float m_rotateRate = 1.0f;
 
     public Vector3 position { get { return transform.position; } set { transform.position = value; } }
     public Vector3 acceleration { get; set; } = Vector3.zero;
@@ -30,15 +31,15 @@ public class AutonomousAgent : MonoBehaviour
         //apply force to acceleration for all behaviours
         foreach(AutonomousBehaviour behaviour in m_behaviours)
         {
-            float scale = 1.0f - Mathf.Clamp01(acceleration.magnitude / maxForce);
-            if (scale > 0.0f)
+            //float scale = 1.0f - Mathf.Clamp01(acceleration.magnitude / maxForce);
+           // if (scale > 0.0f)
             {
                 GameObject target = (behaviour.targetTagName != "NONE") ? GetNearestGameObject(gameObject, behaviour.targetTagName, behaviour.perception) : null;
                 AutonomousAgent targetAgent = (target) ? target.GetComponent<AutonomousAgent>() : null;
 
                 Vector3 force = behaviour.Execute(this, targetAgent, behaviour.targetTagName);
-                force = force * scale * behaviour.strength;
-                force.y = 0.0f;
+                force = Vector3.ClampMagnitude(force, maxForce);
+                force = force /* scale */* behaviour.strength;                
                 ApplyForce(force);
             }
         }       
@@ -47,6 +48,9 @@ public class AutonomousAgent : MonoBehaviour
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         transform.position += velocity * Time.deltaTime;
         transform.position = WrapPosition(transform.position, new Vector3(-10.0f, -10.0f, -10.0f), new Vector3(10.0f, 10.0f, 10.0f));
+
+        Quaternion targetRotation = Quaternion.LookRotation(forward, Vector3.up);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, m_rotateRate * Time.deltaTime);
 
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
     }

@@ -13,12 +13,13 @@ public class AutonomousAgentCreater : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i)) m_agentIndex = i;
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 100.0f))
             {
-                Instantiate(m_agents[m_agentIndex], hit.point, Quaternion.identity);
+                Vector3 positon = new Vector3(hit.point.x, hit.point.y + Random.value *20.0f, hit.point.z);
+                Instantiate(m_agents[m_agentIndex], positon, Quaternion.identity);
             }
         }
     }
