@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1223017185971999721}
   - component: {fileID: 1724404339720378633}
   - component: {fileID: 8158255161380829223}
+  - component: {fileID: 3146861022131890666}
   - component: {fileID: 8158255161380829658}
   - component: {fileID: 8158255161380829659}
   - component: {fileID: 8158255161380829656}
@@ -55,6 +56,7 @@ MonoBehaviour:
   - {fileID: 1724404339720378633}
   - {fileID: 1580333065360967609}
   - {fileID: 1223017185971999721}
+  - {fileID: 3146861022131890666}
   m_maxSpeed: 8
   m_maxForce: 1
   m_rotateRate: 15
@@ -121,6 +123,21 @@ MonoBehaviour:
   m_radius: 2.17
   m_forwardDistance: 3.05
   m_displacement: 22.9
+--- !u!114 &3146861022131890666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8158255161380829662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdc7517766c1fca429f0fc2c2d1efa53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_strength: 1.21
+  m_perception: 8
+  m_targetTag: 3
 --- !u!23 &8158255161380829658
 MeshRenderer:
   m_ObjectHideFlags: 0

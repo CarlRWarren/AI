@@ -7,6 +7,9 @@ TagManager:
   - AGENT01
   - AGENT02
   - Agent02
+  - Guts
+  - AGENT03
+  - Node
   layers:
   - Default
   - TransparentFX
