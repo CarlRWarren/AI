@@ -13,7 +13,7 @@ public static class SearchDFS
         while(nodes.Peek() != destination && nodes.Count>0)
         {
             Node node = nodes.Peek();
-            bool empty = true;
+            bool forward = false;
             foreach(Node.Edge edge in node.edges)
             {
                 Node childNode = edge.nodeB;
@@ -21,11 +21,11 @@ public static class SearchDFS
                 {
                     childNode.visited = true;
                     nodes.Push(childNode);
-                    empty = false;
+                    forward = true;
                     break;
                 }                
             }
-            if (empty)
+            if (!forward)
             {
                 nodes.Pop();
             }

@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_node: {fileID: 5524649842332590614, guid: 7605eb15254d71444b08d9787c837f64, type: 3}
-  m_numNodes: 20
+  m_numNodes: 25
   m_nodeRange: 15
 --- !u!114 &659000956
 MonoBehaviour:
@@ -434,6 +434,7 @@ MonoBehaviour:
   m_source: {fileID: 0}
   m_destination: {fileID: 0}
   m_agent: {fileID: 821801945}
+  m_searchtype: 2
 --- !u!1 &812296824
 GameObject:
   m_ObjectHideFlags: 0
@@ -592,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 40
-  m_rotateSpeed: 4.6
+  m_rotateSpeed: 7.7
   m_waypoint: {fileID: 5793329941321346761}
 --- !u!1 &887107363
 GameObject:

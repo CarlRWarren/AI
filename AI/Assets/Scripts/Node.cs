@@ -21,6 +21,8 @@ public class Node : MonoBehaviour
 	public List<Edge> edges = new List<Edge>();
 	public eType type { get; set; } = eType.STANDARD;
 	public bool visited { get; set; } = false;
+    public Node parentNode { get; set; } = null;
+    public float cost { get; set; } = float.MaxValue;
 
 	Color[] typeColors = { Color.yellow, Color.green, Color.red, Color.white };
 

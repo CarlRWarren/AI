@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class SearchNodeSelector : MonoBehaviour
 {
+    public enum eSearchtype
+    {
+        DPS,
+        BFS,
+        DIJKSTRA,
+    }
 	[SerializeField] Node m_source = null;
 	[SerializeField] Node m_destination = null;
 	[SerializeField] SearchAgent m_agent = null;
+    [SerializeField] eSearchtype m_searchtype = eSearchtype.DPS;
 
 	void Update()
 	{
@@ -30,21 +38,38 @@ public class SearchNodeSelector : MonoBehaviour
 						node.type = Node.eType.DESTINATION;
 						m_destination = node;
 
-                        // build path
-                        SearchDFS.Build(m_source, m_destination, out List<Node> path);
-                        m_agent.waypoint = path[0].GetComponentInChildren<Waypoint>();
+                        List<Node> path = null;
 
-                        for(int i = 0; i<path.Count-1; i++)
-                        { 
-                           Waypoint waypoint = path[i].GetComponentInChildren<Waypoint>();
-                           waypoint.nextWaypoint = path[i + 1].GetComponentInChildren<Waypoint>();
-                        }
-
-                        foreach (Node pathNode in path)
+                        switch (m_searchtype)
                         {
-                            if (pathNode.type == Node.eType.STANDARD)
+                            case eSearchtype.DPS:
+                                SearchDFS.Build(m_source, m_destination, out path);
+                                break;
+                            case eSearchtype.BFS:
+                                SearchBFS.Build(m_source, m_destination, out path);
+                                break;
+                            case eSearchtype.DIJKSTRA:
+                                SearchDIJKSTRA.Build(m_source, m_destination, out path);
+                                break;
+                            default:
+                                break;
+                        }
+                        if (path != null)
+                        {
+                            m_agent.waypoint = path[0].GetComponentInChildren<Waypoint>();
+
+                            for (int i = 0; i < path.Count - 1; i++)
                             {
-                                pathNode.type = Node.eType.PATH;
+                                Waypoint waypoint = path[i].GetComponentInChildren<Waypoint>();
+                                waypoint.nextWaypoint = path[i + 1].GetComponentInChildren<Waypoint>();
+                            }
+
+                            foreach (Node pathNode in path)
+                            {
+                                if (pathNode.type == Node.eType.STANDARD)
+                                {
+                                    pathNode.type = Node.eType.PATH;
+                                }
                             }
                         }
                     }
@@ -66,6 +91,8 @@ public class SearchNodeSelector : MonoBehaviour
 				{
 					node.type = Node.eType.STANDARD;
 					node.visited = false;
+                    node.parentNode = null;
+                    node.cost = float.MaxValue;
 				}
 			}
 		}
