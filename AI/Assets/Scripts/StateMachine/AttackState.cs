@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class AttackState<T> : State<T> where T : StateAgent
 {
-	public AttackState(T owner)
+	public AttackState(T owner, string id)
 	{
 		m_owner = owner;
+        m_id = id;
 	}
 
 	public override void Enter()
 	{
 		m_owner.gameObject.GetComponent<AudioSource>().Play();
+
+        EventData eventData = new EventData();
+        eventData._v3 = m_owner.target.transform.position;
+        EventManager.Instance.SendEvent("Search", ref eventData);
+
 		Debug.Log("enter attack");
 	}
 

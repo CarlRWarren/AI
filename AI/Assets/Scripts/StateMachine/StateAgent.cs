@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StateAgent : MonoBehaviour
 {
 	[SerializeField] Perception m_perception = null;
 	[SerializeField] Waypoint m_waypoint = null;
+    [SerializeField] TextMeshProUGUI m_text = null;
 
 	public Waypoint waypoint {  get { return m_waypoint; } set { m_waypoint = value; } }
 	public Perception perception { get { return m_perception; } }
 
 	public GameObject target { get; set; }
+    public Vector3 targetPosition { get; set; }
 	public Rigidbody rb { get ; set; }
-	public StateMachine<StateAgent> stateMachine { get; set; }
+	public StateMachineBase<StateAgent> stateMachine { get; set; }
 
     public BoolRef m_isDead;
     public FloatRef m_energy = new FloatRef(5.0f);
@@ -22,16 +25,12 @@ public class StateAgent : MonoBehaviour
 		rb = GetComponent<Rigidbody>();
 
 		stateMachine = new StateMachine<StateAgent>();
-        //patrol
-        State<StateAgent> state = new PatrolState<StateAgent>(this);
-        Transition<StateAgent> transition = new TransitionBool<StateAgent>(this, ref m_isDead, true);
-        state.AddTransition(transition, "Death");
-        transition = new TransitionFloat<StateAgent>(this, ref m_energy, 0.0f, TransitionFloat<StateAgent>.eCompare.LESS);
-        state.AddTransition(transition, "Recharge");
-        stateMachine.AddState("Patrol", state);
-		stateMachine.AddState("Attack", new AttackState<StateAgent>(this));
-		stateMachine.AddState("Death", new DeathState<StateAgent>(this));
-        stateMachine.AddState("Recharge", new RechargeState<StateAgent>(this));
+
+        stateMachine.AddState(new PatrolState<StateAgent>(this, "Patrol"));
+		stateMachine.AddState(new SearchState<StateAgent>(this, "Search"));
+		stateMachine.AddState(new AttackState<StateAgent>(this, "Attack"));
+		stateMachine.AddState(new DeathState<StateAgent>(this, "Death"));
+        stateMachine.AddState(new RechargeState<StateAgent>(this, "Recharge"));
 
 		stateMachine.SetState("Patrol");
 	}
@@ -40,5 +39,9 @@ public class StateAgent : MonoBehaviour
     {
         m_energy.m_value -= Time.deltaTime;
 		stateMachine.Update();
+        if(m_text != null)
+        {
+            m_text.text = stateMachine.GetState().m_id;
+        }
     }
 }

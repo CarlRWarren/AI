@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionInt<T> : Transition<T>
+public class TransitionInt : Transition
 {
     public enum eCompare
     {
@@ -13,7 +13,7 @@ public class TransitionInt<T> : Transition<T>
     IntRef m_value;
     int m_condition;
     eCompare m_compare;
-    public TransitionInt(T owner, ref IntRef value1, int condition, eCompare compare) : base(owner)
+    public TransitionInt(ref IntRef value1, int condition, eCompare compare)
     {
         m_value = value1;
         m_condition = condition;

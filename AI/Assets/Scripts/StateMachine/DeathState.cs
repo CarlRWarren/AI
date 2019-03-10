@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class DeathState<T> : State<T> where T : StateAgent
 {
-	public DeathState(T owner)
+	public DeathState(T owner, string id)
 	{
 		m_owner = owner;
+        m_id = id;
 	}
 
 	public override void Enter()

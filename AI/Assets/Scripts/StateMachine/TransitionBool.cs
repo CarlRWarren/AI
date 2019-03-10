@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionBool<T> : Transition<T>
+public class TransitionBool : Transition
 {
     BoolRef m_value;
     bool m_condition;
-    public TransitionBool(T owner, ref BoolRef value1, bool condition = true) : base(owner)
+    public TransitionBool(ref BoolRef value1, bool condition = true)
     {
         m_value = value1;
         m_condition = condition;

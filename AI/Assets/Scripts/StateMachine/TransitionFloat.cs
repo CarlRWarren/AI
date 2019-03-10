@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionFloat<T> : Transition<T>
+public class TransitionFloat : Transition
 {
     public enum eCompare
     {
@@ -13,7 +13,7 @@ public class TransitionFloat<T> : Transition<T>
     FloatRef m_value;
     float m_condition;
     eCompare m_compare;
-    public TransitionFloat(T owner, ref FloatRef value1, float condition, eCompare compare) : base(owner)
+    public TransitionFloat(ref FloatRef value1, float condition, eCompare compare)
     {
         m_value = value1;
         m_condition = condition;
